@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
 import NewForm from "./components/NewForm";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [data, setData] = useState([]);
@@ -20,60 +21,44 @@ function App() {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <div>
-        <h1>Upload and Display Image usign React Hook's</h1>
-        {selectedImage && (
-          <div>
-            <img
-              alt="not fount"
-              width={"250px"}
-              src={URL.createObjectURL(selectedImage)}
-            />
-            <br />
-            <button onClick={() => setSelectedImage(null)}>Remove</button>
-          </div>
-        )}
-        <br />
-
-        <br />
-        <input
-          type="file"
-          name="myImage"
-          onChange={(event) => {
-            console.log(event.target.files[0]);
-            setSelectedImage(event.target.files[0]);
-          }}
-        />
-      </div>
-      <div className="row">
-        <div className="row" style={{ marginBottom: "30px" }}>
-          {data?.map((singleData) => (
-            <div className="col-md-3">
-              <div
-                className="card "
-                style={{ minHeight: "300px", marginTop: "40px" }}
-              >
-                <img
-                  className="card-img-top"
-                  src="https://via.placeholder.com/362x200"
-                  alt="Card image cap"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{singleData.fields.Name}</h5>
-                  <p className="card-text">{singleData.fields.emaill}</p>
-                  <p className="card-text">
-                    <small className="text-muted">
-                      {singleData.fields.fieldd}
-                    </small>
-                  </p>
+    <div>
+      <NavBar />
+      <div className="container mt-5">
+        <div className="row">
+          <div className="row" style={{ marginBottom: "30px" }}>
+            {data?.map((singleData) => (
+              <div className="col-md-3 mb-5">
+                <div
+                  className="card h-100 "
+                  style={{ minHeight: "300px", cursor: "pointer" }}
+                >
+                  <img
+                    className="card-img-top border-bottom"
+                    src={
+                      singleData.fields.Attachments?.[0].thumbnails.large.url
+                        ? singleData.fields.Attachments?.[0].thumbnails.large
+                            .url
+                        : "https://via.placeholder.com/362x200"
+                    }
+                    height="230px"
+                    alt="Card image cap"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{singleData.fields.Name}</h5>
+                    <p className="card-text">{singleData.fields.emaill}</p>
+                    <p className="card-text">
+                      <small className="text-muted">
+                        {singleData.fields.fieldd}
+                      </small>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <div className="col-md-4">
-          <NewForm />
+            ))}
+          </div>
+          <div className="col-md-4">
+            <NewForm />
+          </div>
         </div>
       </div>
     </div>
