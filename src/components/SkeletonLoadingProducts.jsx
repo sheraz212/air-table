@@ -4,7 +4,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 function SkeletonLoadingProducts() {
   const skeletons = Array.from(Array(10).keys());
-  console.log(skeletons);
   return (
     <div className="row">
       {skeletons.map((item) => (
