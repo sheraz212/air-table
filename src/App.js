@@ -3,11 +3,12 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import NewForm from "./components/NewForm";
 import NavBar from "./components/NavBar";
+import GetDimensions from "./components/CustomHooks/GetDImensions";
 
 function App() {
   const [data, setData] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
-
+  const { height, width } = GetDimensions();
+  console.log(width);
   useEffect(() => {
     fetch(
       "https://api.airtable.com/v0/app2eNQJ81li2YSvR/Table%201?api_key=keyzdwwm63fQxCJIq"
@@ -27,7 +28,7 @@ function App() {
         <div className="row">
           <div className="row" style={{ marginBottom: "30px" }}>
             {data?.map((singleData) => (
-              <div className="col-md-3 mb-5">
+              <div className="col-6 col-sm-4 col-md-3 mb-5">
                 <div
                   className="card h-100 "
                   style={{ minHeight: "300px", cursor: "pointer" }}
