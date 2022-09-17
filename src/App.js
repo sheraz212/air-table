@@ -43,6 +43,7 @@ function App() {
       })
       .catch((error) => console.log(error));
   };
+
   return (
     <div>
       <NavBar />
@@ -83,9 +84,8 @@ function App() {
               ))}
             </div>
           )}
-          <div className="col-md-4">
-            <NewForm />
-          </div>
+
+          <NewForm />
         </div>
       </div>
     </div>
