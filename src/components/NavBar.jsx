@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-2">
-      <a className="navbar-brand" href="#">
+      <Link className="navbar-brand" to="/">
         Harlemlabs
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -39,7 +40,7 @@ function NavBar() {
           </li>
         </ul> */}
         <div />
-        <form className="d-flex">
+        {/* <form className="d-flex">
           <input
             className="form-control"
             type="search"
@@ -52,7 +53,7 @@ function NavBar() {
           >
             Search
           </button>
-        </form>
+        </form> */}
       </div>
     </nav>
   );
