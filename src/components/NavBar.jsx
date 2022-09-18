@@ -2,12 +2,12 @@ import React from "react";
 
 function NavBar() {
   return (
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-2">
-      <a class="navbar-brand" href="#">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-2">
+      <a className="navbar-brand" href="#">
         Harlemlabs
       </a>
       <button
-        class="navbar-toggler"
+        className="navbar-toggler"
         type="button"
         data-toggle="collapse"
         data-target="#navbarNavDropdown"
@@ -15,25 +15,25 @@ function NavBar() {
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon"></span>
       </button>
       <div
-        class="collapse navbar-collapse justify-content-between"
+        className="collapse navbar-collapse justify-content-between"
         id="navbarNavDropdown"
       >
-        {/* <ul class="navbar-nav">
-          <li class="nav-item active text-white">
-            <a class="nav-link" href="#">
-              Home <span class="sr-only"></span>
+        {/* <ul className="navbar-nav">
+          <li className="nav-item active text-white">
+            <a className="nav-link" href="#">
+              Home <span className="sr-only"></span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <a className="nav-link" href="#">
               Features
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <a className="nav-link" href="#">
               Pricing
             </a>
           </li>
@@ -41,13 +41,13 @@ function NavBar() {
         <div />
         <form className="d-flex">
           <input
-            class="form-control"
+            className="form-control"
             type="search"
             placeholder="Search"
             aria-label="Search"
           />
           <button
-            class="btn btn-outline-success bg-dark text-white"
+            className="btn btn-outline-success bg-dark text-white"
             type="submit"
           >
             Search

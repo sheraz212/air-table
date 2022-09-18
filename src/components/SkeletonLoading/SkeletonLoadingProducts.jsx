@@ -7,7 +7,7 @@ function SkeletonLoadingProducts() {
   return (
     <div className="row">
       {skeletons.map((item) => (
-        <div className="col-6 col-sm-4 col-md-3 mb-4">
+        <div key={item} className="col-6 col-sm-4 col-md-3 mb-4">
           <Skeleton height="200px" />
         </div>
       ))}
