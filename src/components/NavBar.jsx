@@ -21,7 +21,7 @@ function NavBar() {
         class="collapse navbar-collapse justify-content-between"
         id="navbarNavDropdown"
       >
-        <ul class="navbar-nav">
+        {/* <ul class="navbar-nav">
           <li class="nav-item active text-white">
             <a class="nav-link" href="#">
               Home <span class="sr-only"></span>
@@ -37,7 +37,8 @@ function NavBar() {
               Pricing
             </a>
           </li>
-        </ul>
+        </ul> */}
+        <div />
         <form className="d-flex">
           <input
             class="form-control"

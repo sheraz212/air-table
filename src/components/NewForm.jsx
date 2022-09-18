@@ -5,7 +5,7 @@ function NewForm() {
     <div
       className="row mb-5 p-4 justify-content-evenly rounded-5"
       style={{
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
       }}
     >
       <div
