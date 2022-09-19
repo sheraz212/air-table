@@ -1,0 +1,6 @@
+.modal-dialog{
+    height: 90vh !important;
+    justify-content: center !important;
+    align-items: center !important;
+    display: flex !important;
+}

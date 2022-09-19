@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import NavBar from "../NavBar";
 import NewForm from "../NewForm";
 import SkeletonLoadingProducts from "../SkeletonLoading/SkeletonLoadingProducts";
+import LoginModal from "../Authentication/LoginModal";
 
 function HomePage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [model, setModal] = useState(false);
+  const [selectedID, setSelectedID] = useState();
 
   useEffect(() => {
     getTableData();
@@ -30,10 +33,21 @@ function HomePage() {
       .catch((error) => console.log(error));
   };
 
+  const toggle = (id) => {
+    setSelectedID(id);
+    setModal(!model);
+  };
+
   return (
     <div>
       <div className="container mt-5">
         <h1 className="text-center mb-5">Welcome to Herlem Labs </h1>
+        <LoginModal
+          model={model}
+          setModal={setModal}
+          toggle={toggle}
+          selectedID={selectedID}
+        />
         <div className="row">
           {loading ? (
             <SkeletonLoadingProducts />
@@ -44,8 +58,9 @@ function HomePage() {
                   className="col-6 col-sm-4 col-md-3 mb-4"
                   key={singleData.id}
                 >
-                  <Link
-                    to={`/details/${singleData.id}`}
+                  <div
+                    // to={`/details/${singleData.id}`}
+                    onClick={() => toggle(singleData.id)}
                     className="card h-100"
                     style={{
                       cursor: "pointer",
@@ -72,7 +87,7 @@ function HomePage() {
                         </small>
                       </p>
                     </div>
-                  </Link>
+                  </div>
                 </div>
               ))}
             </div>
