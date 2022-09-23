@@ -42,6 +42,7 @@ function HomePage() {
     <div>
       <div className="container mt-5">
         <h1 className="text-center mb-5">Welcome to Herlem Labs </h1>
+
         <LoginModal
           model={model}
           setModal={setModal}
