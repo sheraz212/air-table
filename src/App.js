@@ -38,11 +38,11 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <button
+      {/* <button
         className="bg-primary m-4"
         style={{ width: "200px", height: "300px" }}
         onClick={handleClick}
-      />
+      /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/details/:id" element={<ProductDetailsPage />} />

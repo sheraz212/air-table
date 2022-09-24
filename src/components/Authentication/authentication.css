@@ -4,3 +4,8 @@
     align-items: center !important;
     display: flex !important;
 }
+
+.small-notice{
+    font-size: 13px;
+    line-height: 0.5;
+}

@@ -36,13 +36,13 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
                   />
                 </div>
                 <p>
-                  Create new account{" "}
+                  Create new account
                   <strong
                     className="text-primary"
                     style={{ cursor: "pointer" }}
                     onClick={enableSignup}
                   >
-                    Signup{" "}
+                    Signup
                   </strong>
                 </p>
               </form>
