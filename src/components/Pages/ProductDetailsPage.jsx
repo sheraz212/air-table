@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
 import LiComponent from "../LiComponent";
 import ProductDetailsSkeleton from "../SkeletonLoading/ProductDetailsSkeleton";
 
@@ -14,10 +15,9 @@ function ProductDetailsPage() {
 
   const retrieveSingleData = () => {
     setLoading(true);
-    fetch(
-      `https://api.airtable.com/v0/appbhM53vmNeHjL9t/Grid%20view/${params.id}`,
-      { headers: { Authorization: `Bearer keyzdwwm63fQxCJIq` } }
-    )
+    fetch(`${MAIN_DATA_TABLE_URL}Grid%20view/${params.id}`, {
+      headers: { Authorization: APIKEY_AIRTABLE },
+    })
       .then((res) => res.json())
       .then((res) => {
         setRecord(res);

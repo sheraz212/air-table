@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./pagesCss/homepage.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
 import NewForm from "../NewForm";
 import SkeletonLoadingProducts from "../SkeletonLoading/SkeletonLoadingProducts";
 import LoginModal from "../Authentication/LoginModal";
+import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
 
 function HomePage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [model, setModal] = useState(false);
   const [selectedID, setSelectedID] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTableData();
@@ -20,8 +22,8 @@ function HomePage() {
   const getTableData = () => {
     setLoading(true);
     fetch(
-      "https://api.airtable.com/v0/appbhM53vmNeHjL9t/tblrKRG2iRMWWNAYY?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=50",
-      { headers: { Authorization: `Bearer keyzdwwm63fQxCJIq` } }
+      `${MAIN_DATA_TABLE_URL}tblrKRG2iRMWWNAYY?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=50`,
+      { headers: { Authorization: APIKEY_AIRTABLE } }
     )
       .then((res) => res.json())
       .then((res) => {
@@ -35,6 +37,10 @@ function HomePage() {
 
   const toggle = (id) => {
     setSelectedID(id);
+    if (localStorage.getItem("id")) {
+      navigate(`/details/${id}`);
+      return;
+    }
     setModal(!model);
   };
 

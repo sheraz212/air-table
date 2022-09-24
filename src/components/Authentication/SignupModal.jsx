@@ -1,12 +1,24 @@
+import { loadStripe } from "@stripe/stripe-js";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 function SignupModal({ setSignIn, toggle }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const stripePromise = loadStripe(
+    "pk_test_51LjlLHEpJlZ6F4BF0w7tf03qtCzQbKneNCWlmLG6wKm8Bxf7viPCitwrO1Jzqm2UepULzAvsLNTCN1bF2fzEI3a100v2SCq58D"
+  );
   const handleSubmit = () => {
-    // localStorage
+    if (name && email && password) {
+      localStorage.setItem("name", name);
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+      navigate("/sign-up");
+      return;
+    } else alert("Please fill all require fields.");
   };
 
   const onChangeHandler = (e) => {
@@ -18,6 +30,27 @@ function SignupModal({ setSignIn, toggle }) {
       : setEmail(value);
     console.log(name, value);
   };
+
+  const handlePayment = async () => {
+    const stripe = await stripePromise;
+    const { error } = await stripe
+      .redirectToCheckout({
+        lineItems: [
+          {
+            price: "price_1LlEIkEpJlZ6F4BFhNpSwC7A",
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        successUrl: "https://localhost:3000/details/rec03svbwmhpQgu0u",
+        cancelUrl: "https://localhost:3000",
+      })
+      .then(function (result) {
+        console.log("hello", result);
+      });
+    console.log(error);
+  };
+
   return (
     <>
       <ModalHeader toggle={toggle}>Please Sign Up to continue</ModalHeader>
@@ -76,7 +109,9 @@ function SignupModal({ setSignIn, toggle }) {
         </form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary">Sign Up</Button>
+        <Button color="primary" onClick={handleSubmit}>
+          Sign Up
+        </Button>
       </ModalFooter>
     </>
   );
