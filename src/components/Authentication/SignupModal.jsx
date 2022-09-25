@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-function SignupModal({ setSignIn, toggle }) {
+function SignupModal({ setSignIn, toggle, prodID }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +16,8 @@ function SignupModal({ setSignIn, toggle }) {
       localStorage.setItem("name", name);
       localStorage.setItem("email", email);
       localStorage.setItem("password", password);
-      navigate("/sign-up");
+      localStorage.setItem("productID", password);
+      navigate(`/sign-up/${prodID}`);
       return;
     } else alert("Please fill all require fields.");
   };

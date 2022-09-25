@@ -52,7 +52,11 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
             </ModalFooter>
           </>
         ) : (
-          <SignupModal setSignIn={setSignIn} toggle={toggle} />
+          <SignupModal
+            setSignIn={setSignIn}
+            toggle={toggle}
+            prodID={selectedID}
+          />
         )}
       </Modal>
     </div>

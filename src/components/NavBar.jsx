@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+  const logOutUser = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-2">
       <Link className="navbar-brand" to="/">
@@ -22,38 +27,17 @@ function NavBar() {
         className="collapse navbar-collapse justify-content-between"
         id="navbarNavDropdown"
       >
-        {/* <ul className="navbar-nav">
-          <li className="nav-item active text-white">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only"></span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Features
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Pricing
-            </a>
-          </li>
-        </ul> */}
         <div />
-        {/* <form className="d-flex">
-          <input
-            className="form-control"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button
-            className="btn btn-outline-success bg-dark text-white"
-            type="submit"
-          >
-            Search
-          </button>
-        </form> */}
+        {localStorage.getItem("id") && (
+          <ul onClick={logOutUser} className="navbar-nav text-white me-5">
+            <li
+              className="nav-item "
+              style={{ cursor: "pointer", fontWeight: "bold" }}
+            >
+              Log Out
+            </li>
+          </ul>
+        )}
       </div>
     </nav>
   );

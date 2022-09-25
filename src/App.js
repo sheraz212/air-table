@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/details/:id" element={<ProductDetailsPage />} />
-        <Route path="/sign-up" element={<FinishSignUpRedirect />} />
+        <Route path="/sign-up/:prodID" element={<FinishSignUpRedirect />} />
       </Routes>
     </Router>
   );

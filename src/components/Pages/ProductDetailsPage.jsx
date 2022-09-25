@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
 import LiComponent from "../LiComponent";
 import ProductDetailsSkeleton from "../SkeletonLoading/ProductDetailsSkeleton";
@@ -8,11 +8,10 @@ function ProductDetailsPage() {
   const params = useParams();
   const [record, setRecord] = useState();
   const [loading, setLoading] = useState(true);
-  console.log({ params });
+  const navigate = useNavigate();
   useEffect(() => {
     retrieveSingleData();
   }, []);
-
   const retrieveSingleData = () => {
     setLoading(true);
     fetch(`${MAIN_DATA_TABLE_URL}Grid%20view/${params.id}`, {
