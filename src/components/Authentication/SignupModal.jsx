@@ -17,7 +17,7 @@ function SignupModal({ setSignIn, toggle, prodID }) {
       localStorage.setItem("email", email);
       localStorage.setItem("password", password);
       localStorage.setItem("productID", password);
-      navigate(`/sign-up/${prodID}`);
+      handlePayment();
       return;
     } else alert("Please fill all require fields.");
   };
@@ -43,11 +43,12 @@ function SignupModal({ setSignIn, toggle, prodID }) {
           },
         ],
         mode: "payment",
-        successUrl: "https://localhost:3000/details/rec03svbwmhpQgu0u",
+        successUrl: `https://deluxe-ganache-d846d9.netlify.app/sign-up/${prodID}`,
         cancelUrl: "https://localhost:3000",
       })
       .then(function (result) {
         console.log("hello", result);
+        navigate(`/sign-up/${prodID}`);
       });
     console.log(error);
   };

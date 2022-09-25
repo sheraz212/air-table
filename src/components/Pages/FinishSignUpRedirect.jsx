@@ -6,7 +6,6 @@ import {
 } from "../../Constants/APIKeys";
 
 function FinishSignUpRedirect() {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
@@ -22,7 +21,6 @@ function FinishSignUpRedirect() {
         "Payment date": "12/11/22",
       },
     };
-    setLoading(true);
     fetch(AUTHENTIATION_TABLE_URL, {
       method: "POST",
       headers: {
@@ -35,10 +33,7 @@ function FinishSignUpRedirect() {
       .then((res) => {
         localStorage.setItem("id", res.id);
         localStorage.removeItem("password");
-        // navigate("../success", { replace: true })
         navigate(`/details/${params.prodID}`, { replace: true });
-        console.log(res);
-        setLoading(false);
       })
       .catch((error) =>
         alert("Something went wrong please try again on previous page")
@@ -46,16 +41,12 @@ function FinishSignUpRedirect() {
   };
 
   return (
-    <div
+    <h2
       className="row justify-content-center align-items-center"
       style={{ height: "70vh" }}
     >
-      {loading ? (
-        <h2>Processing please wait...</h2>
-      ) : (
-        <div>Click here to continue</div>
-      )}
-    </div>
+      Processing please wait...
+    </h2>
   );
 }
 
