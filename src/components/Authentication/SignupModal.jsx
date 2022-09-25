@@ -43,7 +43,8 @@ function SignupModal({ setSignIn, toggle, prodID }) {
           },
         ],
         mode: "payment",
-        successUrl: `https://deluxe-ganache-d846d9.netlify.app/sign-up/${prodID}`,
+        // successUrl: `https://deluxe-ganache-d846d9.netlify.app/sign-up/${prodID}`,
+        successUrl: `https://deluxe-ganache-d846d9.netlify.app`,
         cancelUrl: "https://localhost:3000",
       })
       .then(function (result) {
