@@ -1,14 +1,44 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  APIKEY_AIRTABLE,
+  AUTHENTIATION_TABLE_URL,
+} from "../../Constants/APIKeys";
 import "./authentication.css";
 import SignupModal from "./SignupModal";
 function LoginModal({ model, setModal, toggle, selectedID }) {
-  console.log(selectedID);
   const [signIn, setSignIn] = useState(true);
+  const [userID, setUserID] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const enableSignup = () => {
     setSignIn(false);
   };
-  console.log(signIn);
+  const signInUser = () => {
+    if (userID) {
+      fetch(`${AUTHENTIATION_TABLE_URL}/${userID}`, {
+        headers: {
+          Authorization: APIKEY_AIRTABLE,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.id) {
+            localStorage.setItem("id", res.id);
+            navigate(`/details/${selectedID}`);
+          }
+        })
+        .catch((error) =>
+          alert("Something went wrong please try again on previous page")
+        );
+    } else alert("please enter login Id");
+  };
+
+  const onChangeHandler = (e) => {
+    setUserID(e.target.value);
+  };
   return (
     <div>
       <Modal isOpen={model} toggle={toggle}>
@@ -18,23 +48,17 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
             <ModalBody>
               <form>
                 <div className="form-group  mb-2">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter "
-                  />
-                </div>
-                <div className="form-group  mb-2">
-                  <label for="exampleInputPassword1">Password</label>
+                  <label for="exampleInputEmail1">Login ID</label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="*****"
+                    id="exampleInputEmail1"
+                    placeholder=" Please enter your login ID "
+                    value={userID}
+                    onChange={onChangeHandler}
                   />
                 </div>
+
                 <p>
                   Create new account
                   <strong
@@ -48,7 +72,9 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
               </form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary">Login</Button>
+              <Button color="primary" onClick={signInUser}>
+                Login
+              </Button>
             </ModalFooter>
           </>
         ) : (

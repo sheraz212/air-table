@@ -3,14 +3,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
 import LiComponent from "../LiComponent";
 import ProductDetailsSkeleton from "../SkeletonLoading/ProductDetailsSkeleton";
+import UserIdModal from "../UserIdModal";
 
 function ProductDetailsPage() {
   const params = useParams();
   const [record, setRecord] = useState();
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [modal, setModal] = useState(false);
+  console.log(params);
+  const toggle = () => {
+    setModal(false);
+  };
   useEffect(() => {
     retrieveSingleData();
+    if (params.isSignup == "true") {
+      setModal(true);
+    }
   }, []);
   const retrieveSingleData = () => {
     setLoading(true);
@@ -28,6 +36,8 @@ function ProductDetailsPage() {
   };
   return (
     <div className="container mt-5">
+      <UserIdModal toggle={toggle} modal={modal} />
+
       <div
         className="row justify-content-center py-5"
         style={{ boxShadow: "5px 5px 15px 0px rgba(184,184,184,0.5)" }}

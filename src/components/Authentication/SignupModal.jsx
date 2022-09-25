@@ -2,21 +2,20 @@ import { loadStripe } from "@stripe/stripe-js";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { BASE_URL } from "../../Constants/APIKeys";
 
 function SignupModal({ setSignIn, toggle, prodID }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const stripePromise = loadStripe(
     "pk_test_51LjlLHEpJlZ6F4BF0w7tf03qtCzQbKneNCWlmLG6wKm8Bxf7viPCitwrO1Jzqm2UepULzAvsLNTCN1bF2fzEI3a100v2SCq58D"
   );
   const handleSubmit = () => {
-    if (name && email && password) {
+    if (name && email) {
       localStorage.setItem("name", name);
       localStorage.setItem("email", email);
-      localStorage.setItem("password", password);
-      localStorage.setItem("productID", password);
+      localStorage.setItem("productID", prodID);
       handlePayment();
       return;
     } else alert("Please fill all require fields.");
@@ -24,12 +23,7 @@ function SignupModal({ setSignIn, toggle, prodID }) {
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
-    name === "name"
-      ? setName(value)
-      : name === "password"
-      ? setPassword(value)
-      : setEmail(value);
-    console.log(name, value);
+    name === "name" ? setName(value) : setEmail(value);
   };
 
   const handlePayment = async () => {
@@ -44,8 +38,8 @@ function SignupModal({ setSignIn, toggle, prodID }) {
         ],
         mode: "payment",
         // successUrl: `https://deluxe-ganache-d846d9.netlify.app/sign-up/${prodID}`,
-        successUrl: `https://deluxe-ganache-d846d9.netlify.app`,
-        cancelUrl: "https://localhost:3000",
+        successUrl: `${BASE_URL}/sign-up/${prodID}`,
+        cancelUrl: `${BASE_URL}`,
       })
       .then(function (result) {
         console.log("hello", result);
@@ -82,17 +76,6 @@ function SignupModal({ setSignIn, toggle, prodID }) {
               aria-describedby="emailHelp"
               placeholder="Enter email"
               name="email"
-            />
-          </div>
-          <div className="form-group  mb-2">
-            <label for="exampleInputPassword1">Password</label>
-            <input
-              value={password}
-              onChange={onChangeHandler}
-              type="password"
-              className="form-control"
-              placeholder="*****"
-              name="password"
             />
           </div>
           <b className="small-notice">

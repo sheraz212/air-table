@@ -6,18 +6,23 @@ import {
 } from "../../Constants/APIKeys";
 
 function FinishSignUpRedirect() {
+  const [loading, setLoading] = useState(true);
+  const [id, setId] = useState();
+  const [count, setCount] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
-    makeNewUser();
+    if (count === 0) {
+      makeNewUser();
+    }
   }, []);
 
   const makeNewUser = () => {
+    setLoading(true);
     let data = {
       fields: {
         Name: localStorage.getItem("name"),
         Email: localStorage.getItem("email"),
-        Password: localStorage.getItem("password"),
         "Payment date": "12/11/22",
       },
     };
@@ -32,14 +37,16 @@ function FinishSignUpRedirect() {
       .then((res) => res.json())
       .then((res) => {
         localStorage.setItem("id", res.id);
+        setId(res.id);
         localStorage.removeItem("password");
-        navigate(`/details/${params.prodID}`, { replace: true });
+        setCount(1);
+        setLoading(false);
+        navigate(`/details/${params.prodID}/true`, { replace: true });
       })
       .catch((error) =>
         alert("Something went wrong please try again on previous page")
       );
   };
-
   return (
     <h2
       className="row justify-content-center align-items-center"
