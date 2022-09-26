@@ -5,6 +5,7 @@ import {
   APIKEY_AIRTABLE,
   AUTHENTIATION_TABLE_URL,
 } from "../../Constants/APIKeys";
+import ActivityIndicator from "../animation";
 import "./authentication.css";
 import SignupModal from "./SignupModal";
 function LoginModal({ model, setModal, toggle, selectedID }) {
@@ -16,6 +17,7 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
     setSignIn(false);
   };
   const signInUser = () => {
+    setLoading(true);
     if (userID) {
       fetch(`${AUTHENTIATION_TABLE_URL}/${userID}`, {
         headers: {
@@ -25,6 +27,7 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
       })
         .then((res) => res.json())
         .then((res) => {
+          setLoading(false);
           if (res.id) {
             localStorage.setItem("id", res.id);
             navigate(`/details/${selectedID}`);
@@ -72,9 +75,13 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
               </form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={signInUser}>
-                Login
-              </Button>
+              {loading ? (
+                <ActivityIndicator />
+              ) : (
+                <Button color="primary" onClick={signInUser}>
+                  Login
+                </Button>
+              )}
             </ModalFooter>
           </>
         ) : (

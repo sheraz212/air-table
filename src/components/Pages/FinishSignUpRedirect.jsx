@@ -4,9 +4,9 @@ import {
   APIKEY_AIRTABLE,
   AUTHENTIATION_TABLE_URL,
 } from "../../Constants/APIKeys";
+import ActivityIndicator from "../animation";
 
 function FinishSignUpRedirect() {
-  const [loading, setLoading] = useState(true);
   const [id, setId] = useState();
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ function FinishSignUpRedirect() {
   }, []);
 
   const makeNewUser = () => {
-    setLoading(true);
     let data = {
       fields: {
         Name: localStorage.getItem("name"),
@@ -40,7 +39,7 @@ function FinishSignUpRedirect() {
         setId(res.id);
         localStorage.removeItem("password");
         setCount(1);
-        setLoading(false);
+
         navigate(`/details/${params.prodID}/true`, { replace: true });
       })
       .catch((error) =>
@@ -52,7 +51,7 @@ function FinishSignUpRedirect() {
       className="row justify-content-center align-items-center"
       style={{ height: "70vh" }}
     >
-      Processing please wait...
+      <ActivityIndicator />
     </h2>
   );
 }

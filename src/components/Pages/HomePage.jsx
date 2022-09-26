@@ -7,6 +7,7 @@ import NewForm from "../NewForm";
 import SkeletonLoadingProducts from "../SkeletonLoading/SkeletonLoadingProducts";
 import LoginModal from "../Authentication/LoginModal";
 import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
+import ActivityIndicator from "../animation";
 
 function HomePage() {
   const [data, setData] = useState([]);
@@ -55,6 +56,7 @@ function HomePage() {
           toggle={toggle}
           selectedID={selectedID}
         />
+
         <div className="row">
           {loading ? (
             <SkeletonLoadingProducts />
