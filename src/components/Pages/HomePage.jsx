@@ -9,6 +9,7 @@ import LoginModal from "../Authentication/LoginModal";
 import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
 import { useQuery } from "react-query";
 import axios from "axios";
+import ActivityIndicator from "../animation";
 
 function HomePage() {
   const [allData, setAllData] = useState([]);
@@ -101,6 +102,7 @@ function HomePage() {
           toggle={toggle}
           selectedID={selectedID}
         />
+
         <div className="row">
           {status === "loading" ? (
             <SkeletonLoadingProducts />
