@@ -22,7 +22,7 @@ function ProductDetailsPage() {
   }, []);
   const retrieveSingleData = () => {
     setLoading(true);
-    fetch(`${MAIN_DATA_TABLE_URL}Grid%20view/${params.id}`, {
+    fetch(`${MAIN_DATA_TABLE_URL}/${params.id}`, {
       headers: { Authorization: APIKEY_AIRTABLE },
     })
       .then((res) => res.json())
