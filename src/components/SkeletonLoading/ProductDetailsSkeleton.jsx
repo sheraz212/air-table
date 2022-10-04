@@ -10,17 +10,17 @@ function ProductDetailsSkeleton() {
       <div className=" col-md-7">
         <Skeleton height="50px" className="mb-4" />
 
-        <ul class="list-group mt-3 ">
-          <li class="list-group-item">
+        <ul className="list-group mt-3 ">
+          <li className="list-group-item">
             <Skeleton height="30px" />
           </li>
-          <li class="list-group-item">
+          <li className="list-group-item">
             <Skeleton height="30px" />
           </li>
-          <li class="list-group-item">
+          <li className="list-group-item">
             <Skeleton height="30px" />
           </li>
-          <li class="list-group-item">
+          <li className="list-group-item">
             <Skeleton height="30px" />
           </li>
         </ul>

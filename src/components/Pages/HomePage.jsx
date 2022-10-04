@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./pagesCss/homepage.css";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
 import NewForm from "../NewForm";
 import SkeletonLoadingProducts from "../SkeletonLoading/SkeletonLoadingProducts";
@@ -19,12 +19,17 @@ function HomePage() {
   const [model, setModal] = useState(false);
   const [selectedID, setSelectedID] = useState();
   const navigate = useNavigate();
-  // console.log({ allData: allData?.length, paginationOffset, endOfData });
-  const { data, status } = useQuery("bloodtests", () =>
-    axios.get(
-      `${MAIN_DATA_TABLE_URL}?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=48`,
-      { headers: { Authorization: APIKEY_AIRTABLE } }
-    )
+  console.log({ allDataLength: allData.length });
+  const { data, status } = useQuery(
+    "bloodtests",
+    () =>
+      axios.get(
+        `${MAIN_DATA_TABLE_URL}?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=100`,
+        { headers: { Authorization: APIKEY_AIRTABLE } }
+      ),
+    {
+      keepPreviousData: true,
+    }
   );
 
   const toggle = (id) => {
@@ -41,12 +46,11 @@ function HomePage() {
       let pagination = paginationOffset ? paginationOffset : data.data.offset;
       setPageLoading(true);
       const response = await axios.get(
-        `${MAIN_DATA_TABLE_URL}?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=48&offset=${pagination}`,
+        `${MAIN_DATA_TABLE_URL}?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=100&offset=${pagination}`,
         {
           headers: { Authorization: APIKEY_AIRTABLE },
         }
       );
-      console.log(response, "hellooo");
       if (response?.data) {
         setPageLoading(false);
         console.log(response.data.offset);
@@ -125,12 +129,11 @@ function HomePage() {
                     <b>Load More</b>
                   </button>
                 ) : (
-                  <b>End of data</b>
+                  <b className="text-center h4">End of data</b>
                 )}
               </div>
             </>
           )}
-
           <NewForm />
         </div>
       </div>
