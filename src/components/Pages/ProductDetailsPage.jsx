@@ -35,7 +35,7 @@ function ProductDetailsPage() {
       .catch((error) => console.log(error));
   };
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 flex-grow-1">
       <UserIdModal toggle={toggle} modal={modal} />
 
       <div

@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import HomePage from "./components/Pages/HomePage";
 import ProductDetailsPage from "./components/Pages/ProductDetailsPage";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import FinishSignUpRedirect from "./components/Pages/FinishSignUpRedirect";
 
 function App() {
@@ -11,18 +12,21 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/details/:id/:isSignup"
-            element={<ProductDetailsPage />}
-          />
-          <Route path="/details/:id" element={<ProductDetailsPage />} />
-          <Route path="/sign-up/:prodID" element={<FinishSignUpRedirect />} />
-        </Routes>
-      </Router>
+      <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/details/:id/:isSignup"
+              element={<ProductDetailsPage />}
+            />
+            <Route path="/details/:id" element={<ProductDetailsPage />} />
+            <Route path="/sign-up/:prodID" element={<FinishSignUpRedirect />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </div>
     </QueryClientProvider>
   );
 }

@@ -69,6 +69,7 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
                     style={{ cursor: "pointer" }}
                     onClick={enableSignup}
                   >
+                    {" "}
                     Signup
                   </strong>
                 </p>

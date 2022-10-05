@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./pagesCss/homepage.css";
-
 import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar";
 import NewForm from "../NewForm";
 import SkeletonLoadingProducts from "../SkeletonLoading/SkeletonLoadingProducts";
 import LoginModal from "../Authentication/LoginModal";
@@ -53,7 +51,6 @@ function HomePage() {
       );
       if (response?.data) {
         setPageLoading(false);
-        console.log(response.data.offset);
         if (!paginationOffset) {
           setAllData([...data.data.records, ...response?.data.records]);
         } else setAllData([...allData, ...response?.data.records]);

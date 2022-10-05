@@ -1,8 +1,10 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   APIKEY_AIRTABLE,
   AUTHENTIATION_TABLE_URL,
+  CHECK_EMAIL_ADDRESS,
 } from "../../Constants/APIKeys";
 import ActivityIndicator from "../animation";
 
@@ -17,34 +19,47 @@ function FinishSignUpRedirect() {
     }
   }, []);
 
-  const makeNewUser = () => {
+  const makeNewUser = async () => {
     let data = {
       fields: {
-        Name: localStorage.getItem("name"),
-        Email: localStorage.getItem("email"),
-        "Payment date": "12/11/22",
+        "User Email Address": localStorage.getItem("email"),
+        "First Name": localStorage.getItem("firstName"),
+        "Last name": localStorage.getItem("lastName"),
+        "Payment Date": new Date(),
       },
     };
-    fetch(AUTHENTIATION_TABLE_URL, {
-      method: "POST",
-      headers: {
-        Authorization: APIKEY_AIRTABLE,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        localStorage.setItem("id", res.id);
-        setId(res.id);
-        localStorage.removeItem("password");
-        setCount(1);
+    const response = await axios(CHECK_EMAIL_ADDRESS, {
+      headers: { Authorization: APIKEY_AIRTABLE },
+    });
 
-        navigate(`/details/${params.prodID}/true`, { replace: true });
-      })
-      .catch((error) =>
-        alert("Something went wrong please try again on previous page")
+    if (response?.data) {
+      const isTaken = response.data.records.find(
+        (alreadyEmail) =>
+          alreadyEmail?.fields["User Email Address"] ===
+          localStorage.getItem("email")
       );
+      if (isTaken) {
+        console.log("ye true haiii");
+        return;
+      }
+      const responseUser = await axios.post(
+        AUTHENTIATION_TABLE_URL,
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: APIKEY_AIRTABLE,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (responseUser?.data?.id) {
+        console.log({ responseUser });
+        localStorage.setItem("id", responseUser.data.id);
+        localStorage.setItem("paymentDate", responseUser.data["Payment Date"]);
+        setId(responseUser.data.id);
+        navigate(`/details/${params.prodID}/true`, { replace: true });
+      } else alert("Something went wrong please try again on previous page");
+    }
   };
   return (
     <h2

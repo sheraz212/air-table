@@ -1,29 +1,54 @@
 import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { BASE_URL } from "../../Constants/APIKeys";
+import {
+  APIKEY_AIRTABLE,
+  BASE_URL,
+  CHECK_EMAIL_ADDRESS,
+} from "../../Constants/APIKeys";
 
 function SignupModal({ setSignIn, toggle, prodID }) {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const stripePromise = loadStripe(
     "pk_test_51LjlLHEpJlZ6F4BF0w7tf03qtCzQbKneNCWlmLG6wKm8Bxf7viPCitwrO1Jzqm2UepULzAvsLNTCN1bF2fzEI3a100v2SCq58D"
   );
-  const handleSubmit = () => {
-    if (name && email) {
-      localStorage.setItem("name", name);
-      localStorage.setItem("email", email);
-      localStorage.setItem("productID", prodID);
-      handlePayment();
+  const handleSubmit = async () => {
+    const response = await axios(CHECK_EMAIL_ADDRESS, {
+      headers: { Authorization: APIKEY_AIRTABLE },
+    });
+
+    if (response?.data) {
+      if (firstName && email && lastName) {
+        const isTaken = response.data.records.find(
+          (alreadyEmail) => alreadyEmail?.fields["User Email Address"] === email
+        );
+        if (isTaken) {
+          alert("This email is already taken");
+          return;
+        }
+        localStorage.setItem("firstName", firstName);
+        localStorage.setItem("lastName", lastName);
+        localStorage.setItem("email", email);
+        localStorage.setItem("productID", prodID);
+
+        handlePayment();
+      }
       return;
     } else alert("Please fill all require fields.");
   };
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
-    name === "name" ? setName(value) : setEmail(value);
+    name === "firstName"
+      ? setFirstName(value)
+      : name === "lastName"
+      ? setLastName(value)
+      : setEmail(value);
   };
 
   const handlePayment = async () => {
@@ -42,7 +67,6 @@ function SignupModal({ setSignIn, toggle, prodID }) {
         cancelUrl: `${BASE_URL}`,
       })
       .then(function (result) {
-        console.log("hello", result);
         navigate(`/sign-up/${prodID}`);
       });
     console.log(error);
@@ -53,26 +77,35 @@ function SignupModal({ setSignIn, toggle, prodID }) {
       <ModalHeader toggle={toggle}>Please Sign Up to continue</ModalHeader>
       <ModalBody>
         <form>
-          <div className="form-group  mb-2">
-            <label for="exampleInputEmail1">Name</label>
+          <div className="form-group mb-2">
+            <label for="exampleInputEmail1">First Name</label>
             <input
-              value={name}
+              value={firstName}
               onChange={onChangeHandler}
               type="text"
               className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter name"
-              name="name"
+              placeholder="Enter first name"
+              name="firstName"
             />
           </div>
-          <div className="form-group  mb-2">
+          <div className="form-group mb-2">
+            <label for="exampleInputEmail1">Last Name</label>
+            <input
+              value={lastName}
+              onChange={onChangeHandler}
+              type="text"
+              className="form-control"
+              placeholder="Enter last name"
+              name="lastName"
+            />
+          </div>
+          <div className="form-group mb-2">
             <label for="exampleInputEmail1">Email address</label>
             <input
               value={email}
               onChange={onChangeHandler}
               type="email"
               className="form-control"
-              id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter email"
               name="email"
