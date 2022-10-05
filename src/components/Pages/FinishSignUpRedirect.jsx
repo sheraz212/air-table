@@ -39,7 +39,6 @@ function FinishSignUpRedirect() {
           localStorage.getItem("email")
       );
       if (isTaken) {
-        console.log("ye true haiii");
         return;
       }
       const responseUser = await axios.post(

@@ -28,8 +28,9 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
         .then((res) => res.json())
         .then((res) => {
           setLoading(false);
-          if (res.id) {
+          if (res?.id) {
             localStorage.setItem("id", res.id);
+            localStorage.setItem("paymentDate", res.data["Payment Date"]);
             navigate(`/details/${selectedID}`);
           }
         })

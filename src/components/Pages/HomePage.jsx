@@ -116,12 +116,15 @@ function HomePage() {
                       mapData(singleData)
                     )}
               </div>
-              <div className="row" style={{ marginBottom: "30px" }}>
+              <div
+                className="row justify-content-center"
+                style={{ marginBottom: "30px" }}
+              >
                 {!endOfData ? (
                   <button
                     disabled={pageLoading}
                     onClick={paginationHandler}
-                    className="col-lg-12 btn btn-primary "
+                    className="col-lg-3 btn btn-primary "
                   >
                     <b>Load More</b>
                   </button>
