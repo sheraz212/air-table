@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
@@ -16,27 +17,28 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
   const enableSignup = () => {
     setSignIn(false);
   };
-  const signInUser = () => {
+  const signInUser = async () => {
     setLoading(true);
+
     if (userID) {
-      fetch(`${AUTHENTIATION_TABLE_URL}/${userID}`, {
+      const response = await axios(`${AUTHENTIATION_TABLE_URL}/${userID}`, {
         headers: {
           Authorization: APIKEY_AIRTABLE,
           "Content-Type": "application/json",
         },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          setLoading(false);
-          if (res?.id) {
-            localStorage.setItem("id", res.id);
-            localStorage.setItem("paymentDate", res.data["Payment Date"]);
-            navigate(`/details/${selectedID}`);
-          }
-        })
-        .catch((error) =>
-          alert("Something went wrong please try again on previous page")
-        );
+      });
+      console.log(response.data);
+      if (response?.data) {
+        setLoading(false);
+        if (response?.data.id) {
+          localStorage.setItem("id", response.data.id);
+          localStorage.setItem(
+            "paymentDate",
+            response.data.fields["Payment Date"]
+          );
+          navigate(`/details/${selectedID}`);
+        }
+      } else alert("Something went wrong please try again on previous page");
     } else alert("please enter login Id");
   };
 
