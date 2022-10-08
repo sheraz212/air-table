@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
 import LiComponent from "../LiComponent";
+import RenewMembership from "../RenewMembership";
 import ProductDetailsSkeleton from "../SkeletonLoading/ProductDetailsSkeleton";
 import UserIdModal from "../UserIdModal";
 
@@ -37,6 +38,7 @@ function ProductDetailsPage() {
   return (
     <div className="container mt-5 flex-grow-1">
       <UserIdModal toggle={toggle} modal={modal} />
+      <RenewMembership />
 
       <div
         className="row justify-content-center py-5"

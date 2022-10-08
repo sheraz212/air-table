@@ -33,6 +33,12 @@ function LoginModal({ model, setModal, toggle, selectedID }) {
         if (response?.data.id) {
           localStorage.setItem("id", response.data.id);
           localStorage.setItem(
+            "emailAddress",
+            response.data.fields["User Email Address"]
+          );
+          localStorage.setItem("firstName", response.data.fields["First Name"]);
+          localStorage.setItem("lastName", response.data.fields["Last name"]);
+          localStorage.setItem(
             "paymentDate",
             response.data.fields["Payment Date"]
           );

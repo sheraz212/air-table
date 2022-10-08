@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import "./pagesCss/homepage.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NewForm from "../NewForm";
 import SkeletonLoadingProducts from "../SkeletonLoading/SkeletonLoadingProducts";
 import LoginModal from "../Authentication/LoginModal";
-import { APIKEY_AIRTABLE, MAIN_DATA_TABLE_URL } from "../../Constants/APIKeys";
+import {
+  APIKEY_AIRTABLE,
+  AUTHENTIATION_TABLE_URL,
+  MAIN_DATA_TABLE_URL,
+} from "../../Constants/APIKeys";
 import { useQuery } from "react-query";
 import axios from "axios";
-import ActivityIndicator from "../animation";
+import { useEffect } from "react";
+import RenewMembership from "../RenewMembership";
 
 function HomePage() {
   const [allData, setAllData] = useState([]);
@@ -17,9 +22,15 @@ function HomePage() {
   const [model, setModal] = useState(false);
   const [selectedID, setSelectedID] = useState();
   const navigate = useNavigate();
-  console.log({ allDataLength: allData.length });
+  const params = useParams();
+
+  useEffect(() => {
+    if (params?.id) {
+      updatePaymentDate();
+    }
+  }, []);
   const { data, status } = useQuery(
-    "bloodtests",
+    "products",
     () =>
       axios.get(
         `${MAIN_DATA_TABLE_URL}?fields%5B%5D=Names&fields%5B%5D=Title&fields%5B%5D=Firm&pageSize=100`,
@@ -30,6 +41,36 @@ function HomePage() {
     }
   );
 
+  const updatePaymentDate = async () => {
+    let data = {
+      fields: {
+        "Payment Date": new Date(),
+      },
+    };
+    const response = await axios.patch(
+      `${AUTHENTIATION_TABLE_URL}/${params.id}`,
+
+      JSON.stringify(data),
+      {
+        headers: {
+          Authorization: APIKEY_AIRTABLE,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response?.data?.id) {
+      localStorage.setItem("id", response.data.id);
+      localStorage.setItem(
+        "emailAddress",
+        response.data.fields["User Email Address"]
+      );
+      localStorage.setItem("firstName", response.data.fields["First Name"]);
+      localStorage.setItem("lastName", response.data.fields["Last Name"]);
+      localStorage.setItem("paymentDate", response.data.fields["Payment Date"]);
+      alert("Congratulations your account has been updated!");
+      navigate("/");
+    } else alert("Something went wrong");
+  };
   const toggle = (id) => {
     setSelectedID(id);
     if (localStorage.getItem("id")) {
@@ -95,7 +136,8 @@ function HomePage() {
   return (
     <div>
       <div className="container mt-5">
-        <h1 className="text-center mb-5">Welcome to Herlem Labs </h1>
+        <h1 className="text-center mb-5"> VC Background Database.</h1>
+        {!params.id && <RenewMembership />}
 
         <LoginModal
           model={model}

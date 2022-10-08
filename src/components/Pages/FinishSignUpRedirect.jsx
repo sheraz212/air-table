@@ -55,6 +55,8 @@ function FinishSignUpRedirect() {
         console.log({ responseUser });
         localStorage.setItem("id", responseUser.data.id);
         localStorage.setItem("paymentDate", responseUser.data["Payment Date"]);
+        localStorage.setItem("firstName", response.data.fields["First Name"]);
+        localStorage.setItem("lastName", response.data.fields["Last name"]);
         setId(responseUser.data.id);
         navigate(`/details/${params.prodID}/true`, { replace: true });
       } else alert("Something went wrong please try again on previous page");

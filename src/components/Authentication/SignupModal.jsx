@@ -7,6 +7,8 @@ import {
   APIKEY_AIRTABLE,
   BASE_URL,
   CHECK_EMAIL_ADDRESS,
+  PRODUCT_PRICE_KEY,
+  STRIPE_KEY,
 } from "../../Constants/APIKeys";
 
 function SignupModal({ setSignIn, toggle, prodID }) {
@@ -14,9 +16,7 @@ function SignupModal({ setSignIn, toggle, prodID }) {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const stripePromise = loadStripe(
-    "pk_test_51LjlLHEpJlZ6F4BF0w7tf03qtCzQbKneNCWlmLG6wKm8Bxf7viPCitwrO1Jzqm2UepULzAvsLNTCN1bF2fzEI3a100v2SCq58D"
-  );
+  const stripePromise = loadStripe(STRIPE_KEY);
   const handleSubmit = async () => {
     const response = await axios(CHECK_EMAIL_ADDRESS, {
       headers: { Authorization: APIKEY_AIRTABLE },
@@ -57,12 +57,11 @@ function SignupModal({ setSignIn, toggle, prodID }) {
       .redirectToCheckout({
         lineItems: [
           {
-            price: "price_1LlEIkEpJlZ6F4BFhNpSwC7A",
+            price: PRODUCT_PRICE_KEY,
             quantity: 1,
           },
         ],
         mode: "payment",
-        // successUrl: `https://deluxe-ganache-d846d9.netlify.app/sign-up/${prodID}`,
         successUrl: `${BASE_URL}/sign-up/${prodID}`,
         cancelUrl: `${BASE_URL}`,
       })

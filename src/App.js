@@ -17,6 +17,7 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/renew-membership/:id" element={<HomePage />} />
             <Route
               path="/details/:id/:isSignup"
               element={<ProductDetailsPage />}
