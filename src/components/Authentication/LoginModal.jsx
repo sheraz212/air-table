@@ -9,7 +9,7 @@ import {
 import ActivityIndicator from "../animation";
 import "./authentication.css";
 import SignupModal from "./SignupModal";
-function LoginModal({ model, setModal, toggle, selectedID }) {
+function LoginModal({ model, toggle, selectedID }) {
   const [signIn, setSignIn] = useState(true);
   const [userID, setUserID] = useState("");
   const [loading, setLoading] = useState(false);

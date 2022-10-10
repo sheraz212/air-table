@@ -2,7 +2,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   APIKEY_AIRTABLE,
   BASE_URL,
@@ -37,9 +37,9 @@ function SignupModal({ setSignIn, toggle, prodID }) {
         localStorage.setItem("productID", prodID);
 
         handlePayment();
-      }
-      return;
-    } else alert("Please fill all require fields.");
+      } else alert("Please fill all require fields.");
+    }
+    return;
   };
 
   const onChangeHandler = (e) => {

@@ -9,7 +9,6 @@ import {
 import ActivityIndicator from "../animation";
 
 function FinishSignUpRedirect() {
-  const [id, setId] = useState();
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
@@ -33,12 +32,14 @@ function FinishSignUpRedirect() {
     });
 
     if (response?.data) {
+      console.log(response);
       const isTaken = response.data.records.find(
         (alreadyEmail) =>
           alreadyEmail?.fields["User Email Address"] ===
           localStorage.getItem("email")
       );
       if (isTaken) {
+        alert("This email is already taken");
         return;
       }
       const responseUser = await axios.post(
@@ -52,19 +53,26 @@ function FinishSignUpRedirect() {
         }
       );
       if (responseUser?.data?.id) {
-        console.log({ responseUser });
         localStorage.setItem("id", responseUser.data.id);
-        localStorage.setItem("paymentDate", responseUser.data["Payment Date"]);
-        localStorage.setItem("firstName", response.data.fields["First Name"]);
-        localStorage.setItem("lastName", response.data.fields["Last name"]);
-        setId(responseUser.data.id);
+        localStorage.setItem(
+          "paymentDate",
+          responseUser.data.fields["Payment Date"]
+        );
+        localStorage.setItem(
+          "firstName",
+          responseUser.data?.fields["First Name"]
+        );
+        localStorage.setItem(
+          "lastName",
+          responseUser.data?.fields["Last name"]
+        );
         navigate(`/details/${params.prodID}/true`, { replace: true });
       } else alert("Something went wrong please try again on previous page");
     }
   };
   return (
     <h2
-      className="row justify-content-center align-items-center"
+      className="row justify-content-center align-items-center flex-grow-1"
       style={{ height: "70vh" }}
     >
       <ActivityIndicator />
