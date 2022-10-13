@@ -19,33 +19,33 @@ function LoginModal({ model, toggle, selectedID }) {
   };
   const signInUser = async () => {
     setLoading(true);
-
-    if (userID) {
+    try {
       const response = await axios(`${AUTHENTIATION_TABLE_URL}/${userID}`, {
         headers: {
           Authorization: APIKEY_AIRTABLE,
           "Content-Type": "application/json",
         },
       });
-      console.log(response.data);
-      if (response?.data) {
-        setLoading(false);
-        if (response?.data.id) {
-          localStorage.setItem("id", response.data.id);
-          localStorage.setItem(
-            "emailAddress",
-            response.data.fields["User Email Address"]
-          );
-          localStorage.setItem("firstName", response.data.fields["First Name"]);
-          localStorage.setItem("lastName", response.data.fields["Last name"]);
-          localStorage.setItem(
-            "paymentDate",
-            response.data.fields["Payment Date"]
-          );
-          navigate(`/details/${selectedID}`);
-        }
-      } else alert("Something went wrong please try again on previous page");
-    } else alert("please enter login Id");
+      setLoading(false);
+      localStorage.setItem("id", response.data.id);
+      localStorage.setItem(
+        "emailAddress",
+        response.data.fields["User Email Address"]
+      );
+      localStorage.setItem("firstName", response.data.fields["First Name"]);
+      localStorage.setItem("lastName", response.data.fields["Last name"]);
+      localStorage.setItem("paymentDate", response.data.fields["Payment Date"]);
+      navigate(`/details/${selectedID}`);
+    } catch (error) {
+      setLoading(false);
+
+      if (!userID) {
+        alert("Please enter login id");
+      }
+      if (error?.message === "Request failed with status code 404") {
+        alert("Please enter valid login id");
+      }
+    }
   };
 
   const onChangeHandler = (e) => {

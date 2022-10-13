@@ -17,6 +17,6 @@ export const CONTACT_FORM_SUBMISSION =
   "https://api.airtable.com/v0/apptJud1mb3N8oTNd/Contact%20Us%20Form";
 
 export const STRIPE_KEY =
-  "pk_test_51LjlLHEpJlZ6F4BF0w7tf03qtCzQbKneNCWlmLG6wKm8Bxf7viPCitwrO1Jzqm2UepULzAvsLNTCN1bF2fzEI3a100v2SCq58D";
+  "pk_live_51LjlLHEpJlZ6F4BFjqbskQSIhEJTlWdDs6bBOlxFhNYx9IR2On28glvqX7LDF8j21tt4rE3aMvlclRRgPDtkPCW200dO9MNDlT";
 
-export const PRODUCT_PRICE_KEY = "price_1LlEIkEpJlZ6F4BFhNpSwC7A";
+export const PRODUCT_PRICE_KEY = "price_1Lr78sEpJlZ6F4BFyE0NuVkt";
